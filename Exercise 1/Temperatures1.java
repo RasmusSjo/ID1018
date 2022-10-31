@@ -33,6 +33,7 @@ import static java.lang.System.out;
 
 class Temperatures1
 {
+
 	public static void main (String[] args)
 	{
 		out.println("TEMPERATURES\n");
@@ -77,7 +78,28 @@ class Temperatures1
 		double[] maxT = new double[nofWeeks + 1];
 		double[] sumT = new double[nofWeeks + 1];
 		double[] avgT = new double[nofWeeks + 1];
+
         // add code here
+		for (int week = 1; week <= nofWeeks; week++) {
+			minT[week] = t[week][1];
+			maxT[week] = t[week][1];
+			double sum = 0;
+
+			for (int reading = 1; reading <= nofMeasurementsPerWeek; reading++) {
+
+				if (t[week][reading] < minT[week]) {
+					minT[week] = t[week][reading];
+				}
+				if (t[week][reading] > minT[week]) {
+					minT[week] = t[week][reading];
+				}
+
+				sum += t[week][reading];
+			}
+
+			sumT[week] = sum;
+			avgT[week] = sum / nofMeasurementsPerWeek;
+		}
 
 		// show the least, greatest and average temperatures
 		out.println("the least, greatest and average temperatures"
