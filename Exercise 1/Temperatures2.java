@@ -130,10 +130,10 @@ class Temperatures2
 	public static double min (double[] temp)
 	{
 		// add code here
-		int minTemp = 0;
-		for (int reading = 1; reading <= temp.length; reading++) {
-			if (reading < minTemp) {
-				minTemp = reading;
+		double minTemp = temp[1];
+		for (int week = 1; week < temp.length; week++) {
+			if (minTemp > temp[week]) {
+				minTemp = temp[week];
 			}
 		}
 		return minTemp;
@@ -144,13 +144,13 @@ class Temperatures2
 	public static double max (double[] temp)
 	{
 		// add code here
-		int minTemp = 0;
-		for (int reading = 1; reading <= temp.length; reading++) {
-			if (reading < minTemp) {
-				minTemp = reading;
+		double maxTemp = temp[1];
+		for (int reading = 1; reading < temp.length; reading++) {
+			if (maxTemp < temp[reading]) {
+				maxTemp = temp[reading];
 			}
 		}
-		return minTemp;
+		return maxTemp;
 	}
 
     // sum returnes the sum of the temperatures in a specified array.
@@ -158,11 +158,10 @@ class Temperatures2
 	public static double sum (double[] temp)
 	{
 		// add code here
-		int minTemp = 0;
-		for (int reading = 1; reading <= temp.length; reading++) {
-			if (reading < minTemp) {
-				minTemp = reading;
-			}
+		double sum = 0;
+		for (int reading = 1; reading < temp.length; reading++) {
+			sum += temp[reading];
 		}
-		return minTemp;	}
+		return sum;
+	}
 }
