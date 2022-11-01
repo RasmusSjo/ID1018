@@ -1,3 +1,5 @@
+package AssignmentOne;
+
 // Temperatures2.java
 
 // proccessing measurement data
