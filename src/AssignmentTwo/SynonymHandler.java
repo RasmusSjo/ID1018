@@ -107,8 +107,7 @@ class SynonymHandler
 	    String synonymLine)
 	{
 		String[] synData = new String[synonymData.length + 1];
-		for (int i = 0; i < synonymData.length; i++)
-		    synData[i] = synonymData[i];
+		System.arraycopy(synonymData, 0, synData, 0, synonymData.length);
 		synData[synData.length - 1] = synonymLine;
 
 	    return synData;
@@ -123,12 +122,11 @@ class SynonymHandler
 	{
 		// add code here
 		String[] synData = new String[synonymData.length - 1];
-		int newIndex = 0;
 		int removeLineIndex = synonymLineIndex(synonymData, word);
 
 		for (int i = 0; i < synData.length; i++) {
-			newIndex = i;
-			if (i == removeLineIndex) {
+			int newIndex = i;
+			if (i >= removeLineIndex) {
 				newIndex++;
 			}
 			synData[i] = synonymData[newIndex];
@@ -169,19 +167,62 @@ class SynonymHandler
 		synonymData[synIndex] = synonymData[synIndex].replace(synRemove, "");
 	}
 
+	// getSynonyms returns an array containing all the
+	// synonyms in the given synonym line
+	private static String[] getSynonyms(String synLine) {
+		String synPart = synLine.substring(synLine.indexOf('|') + 1);
+
+		boolean filtered = false;
+		while (!filtered) {
+			if (synPart.length() > 0 && synPart.charAt(0) == ' ') {
+				synPart = synPart.substring(1);
+			}
+			if (synPart.charAt(0) != ' ') {
+				filtered = true;
+			}
+		}
+
+		return synPart.split("\\W+", 0);
+	}
+
     // sortIgnoreCase sorts an array of strings, using
     // the selection sort algorithm
     private static void sortIgnoreCase (String[] strings)
     {
         // add code here
+		for (int i = 0; i < strings.length - 1; i++) {
+			int firstIndex = i;
+			String first = strings[i];
+
+			for (int j = i + 1; j < strings.length; j++) {
+				if (first.compareTo(strings[j]) > 0) {
+					firstIndex = j;
+					first = strings[j];
+				}
+			}
+
+			strings[firstIndex] = strings[i];
+			strings[i] = first;
+		}
 	}
 
     // sortSynonymLine accepts a synonym line, and sorts
     // the synonyms in this line
-    private static String sortSynonymLine (String synonymLine)
+    public static String sortSynonymLine (String synonymLine)
     {
 	    // add code here
-		return "test";
+		String[] synonyms = getSynonyms(synonymLine);
+		sortIgnoreCase(synonyms);
+		String sortedSynLine =  synonymLine.substring(0, synonymLine.indexOf('|') + 1);
+
+		for (int i = 0; i < synonyms.length; i++) {
+			String synonym = " " + synonyms[i] + ",";
+			if (i == synonyms.length - 1) {
+				synonym = " " + synonyms[i];
+			}
+			sortedSynLine += (synonym);
+		}
+		return sortedSynLine;
 	}
 
     // sortSynonymData accepts synonym data, and sorts its
@@ -189,5 +230,9 @@ class SynonymHandler
 	public static void sortSynonymData (String[] synonymData)
 	{
         // add code here
+		for (int i = 0; i < synonymData.length; i++) {
+			synonymData[i] = sortSynonymLine(synonymData[i]);
+		}
+		sortIgnoreCase(synonymData);
 	}
 }
