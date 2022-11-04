@@ -1,4 +1,4 @@
-package AssignmentThree;
+package AssignmentThree.QueueExample;
 
 // QueueTest.java
 
@@ -9,8 +9,8 @@ class QueueTest
     public static void main (String[] args)
     {
         Queue queue = null;
-        queue = new ArrayQueue();
-        // queue = new LinkedQueue();
+        // queue = new ArrayQueue();
+        queue = new LinkedQueue();
         out.println("the queue: " + queue);
 
         int numberOfElements = queue.size();

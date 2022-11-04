@@ -1,4 +1,4 @@
-package AssignmentThree;
+package AssignmentThree.QueueExample;
 
 // Queue.java
 
