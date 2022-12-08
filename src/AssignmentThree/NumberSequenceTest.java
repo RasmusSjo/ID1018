@@ -22,8 +22,8 @@ class NumberSequenceTest
 		    {1.0, 2.0, 3.0, 5.0, 8.0, 13.0, 21.0};
         double[] reversedNumbers = {77, 3, 1, 0, -5, -6, -10};
         NumberSequence sequence = null;
-        //sequence = new ArrayNumberSequence(realNumbers);
-        sequence = new LinkedNumberSequence(reversedNumbers);
+        sequence = new ArrayNumberSequence(realNumbers);
+        sequence = new LinkedNumberSequence(realNumbers);
         out.println("the sequence:");
         out.println(sequence);
         out.println();
@@ -52,6 +52,8 @@ class NumberSequenceTest
         out.println(sequence + "\n");
 
         out.println("corresponding array: ");
-        out.println(sequence);
+        for (double number : sequence.asArray()) {
+            out.print(number + " ");
+        }
     }
 }

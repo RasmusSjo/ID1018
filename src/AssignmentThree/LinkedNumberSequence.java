@@ -109,25 +109,23 @@ public class LinkedNumberSequence implements NumberSequence
 
 	@Override
 	public double numberAt(int position) throws IndexOutOfBoundsException {
-		int index = 0;
-		double number = 0;
-
 		if (position < 0 || length() <= position) {
 			throw new IndexOutOfBoundsException(
 					"Index " + position + " out of bounds for length " + length());
 		}
 
+		int index = 0;
+
 		Node n = first;
 		while (n != null) {
 			if (index == position) {
-				number = n.number;
-				break;
+				return n.number;
 			}
 			n = n.next;
 			index++;
 		}
 
-		return number;
+		return -1;
 	}
 
 	@Override
@@ -154,14 +152,12 @@ public class LinkedNumberSequence implements NumberSequence
 		boolean increasing = true;
 
 		Node n = first;
-		while (n.next != null) {
+		while (n.next != null && increasing) {
 			if (n.number > n.next.number) {
 				increasing = false;
-				break;
 			}
 			n = n.next;
 		}
-
 		return increasing;
 	}
 
@@ -170,14 +166,12 @@ public class LinkedNumberSequence implements NumberSequence
 		boolean decreasing = true;
 
 		Node n = first;
-		while (n.next != null) {
+		while (n.next != null && decreasing) {
 			if (n.number < n.next.number) {
 				decreasing = false;
-				break;
 			}
 			n = n.next;
 		}
-
 		return decreasing;
 	}
 
@@ -216,7 +210,6 @@ public class LinkedNumberSequence implements NumberSequence
 	@Override
 	public void insert(int position, double number) {
 		Node node = new Node(number);
-		int index = 0;
 
 		if (position < 0 || length() < position) {
 			throw new IndexOutOfBoundsException(
@@ -225,8 +218,8 @@ public class LinkedNumberSequence implements NumberSequence
 
 		Node n = first;
 		Node prev = null;
-		while (n != null) {
-			if (index == position) {
+		for (int i = 0; i <= position; i++) {
+			if (i == position) {
 				if (position == 0) {
 					first = node;
 				}
@@ -236,22 +229,15 @@ public class LinkedNumberSequence implements NumberSequence
 				node.next = n;
 				break;
 			}
-			else if (position == length() && n.next == null) {
-				n.next = node;
-				break;
-			}
 
 			prev = n;
 			n = n.next;
-			index++;
 		}
 
 	}
 
 	@Override
 	public void removeAt(int position) throws IndexOutOfBoundsException {
-		int index = 0;
-
 		if (position < 0 || length() <= position) {
 			throw new IndexOutOfBoundsException(
 					"Index " + position + " out of bounds for length " + length());
@@ -262,39 +248,27 @@ public class LinkedNumberSequence implements NumberSequence
 
 		Node n = first;
 		Node prev = first;
-		while (n != null) {
+		for (int i = 0; i <= position; i++) {
 			if (position == 0) {
 				first = n.next;
-				break;
 			}
-			else if (index == position) {
+			else if (i == position) {
 				prev.next = n.next;
-				break;
 			}
 
 			prev = n;
 			n = n.next;
-			index++;
 		}
 	}
 
 	@Override
 	public double[] asArray() {
-		double[] seq = new double[0];
+		double[] seq = new double[length()];
 
 		Node n = first;
-		while (n != null) {
-			double[] arr = new double[seq.length + 1];
-
-			System.arraycopy(seq, 0 , arr, 0, seq.length);
-			arr[arr.length - 1] = n.number;
-
-			seq = arr;
+		for (int i = 0; i < seq.length; i++){
+			seq[i] = n.number;
 			n = n.next;
-		}
-
-		for (double v : seq) {
-			System.out.print(v);
 		}
 
 		return seq;

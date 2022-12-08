@@ -82,11 +82,15 @@ class Temperatures1
 		double[] avgT = new double[nofWeeks + 1];
 
         // add code here
+		// This indexing sucks
 		for (int week = 1; week <= nofWeeks; week++) {
+			// Init the min/max value for each week to be the first temperature
+			// of the week, then we can compare the rest of them to this value
 			minT[week] = t[week][1];
 			maxT[week] = t[week][1];
 			double sum = 0;
 
+			// Compare the temperatures to the min/max value, also sum the value
 			for (int reading = 1; reading <= nofMeasurementsPerWeek; reading++) {
 				if (t[week][reading] < minT[week]) {
 					minT[week] = t[week][reading];
@@ -128,9 +132,12 @@ class Temperatures1
 			if (maxT[week] > maxTemp) {
 				maxTemp = maxT[week];
 			}
-			avgTemp += avgT[week];
+			// Sum the average of each week
+			sumTemp += sumT[week];
 		}
-		avgTemp /= nofWeeks;
+		// Divide the sum of averages with the number of weeks to get
+		// the average over the whole period
+		avgTemp = sumTemp / (nofWeeks * nofMeasurementsPerWeek);
 
         // show the least, greatest and average temperature for
         // the whole period
