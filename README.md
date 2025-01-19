@@ -1,2 +1,2 @@
 # ID1018
-Repository for the course ID1018
+Repository for the course Programming I (ID1018)
